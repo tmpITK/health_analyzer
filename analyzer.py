@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import pandas as pd
 import numpy as np
 import glob
+import os
 
 dictionary = {'Előzmények': 'date',
               'Testsúly (kg)' : 'weight',
@@ -35,6 +37,8 @@ def read_monthly_data(path : str) -> pd.DataFrame:
     return pd.concat(temp_list, axis=0, ignore_index=True)
 
 if __name__ == '__main__':
-    path = r'D:\Python_projects\health_analyzer\db'
-    raw_dataFrame = read_data(path)
-    print(raw_dataFrame.head())
+    path_db= r'D:\Python_projects\health_analyzer\db'
+    path_daily = os.path.join(path_db, 'daily')
+    path_monthly = os.path.join(path_db, 'monthly')
+    healthData = read_monthly_data(path_monthly)
+    print(healthData.head())
