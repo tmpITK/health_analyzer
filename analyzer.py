@@ -36,9 +36,31 @@ def read_monthly_data(path : str) -> pd.DataFrame:
 
     return pd.concat(temp_list, axis=0, ignore_index=True)
 
+def clean_monthly_data(df : pd.DataFrame):
+    delete_only_nan_columns(df)
+    translate_columns(df)
+
+def delete_only_nan_columns(df : pd.DataFrame):
+    onlyNanColumns = df.columns[df.isna().all()]
+
+    for col in onlyNanColumns:
+        del df[col]
+
+def translate_columns(df : pd.DataFrame):
+
+    for col in df:
+        for i, row in enumerate(df[col]):
+            word = df[col][i]
+
+            if word in dictionary:
+                print(word)
+                df[col][i] = dictionary[word]
+
 if __name__ == '__main__':
     path_db= r'D:\Python_projects\health_analyzer\db'
     path_daily = os.path.join(path_db, 'daily')
     path_monthly = os.path.join(path_db, 'monthly')
     healthData = read_monthly_data(path_monthly)
+    print(healthData.head())
+    clean_monthly_data(healthData)
     print(healthData.head())
