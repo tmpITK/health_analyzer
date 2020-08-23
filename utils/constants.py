@@ -1,0 +1,1 @@
+PATH_DB= r'D:\Python_projects\health_analyzer\db'
