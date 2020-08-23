@@ -3,18 +3,11 @@ import pandas as pd
 import numpy as np
 import glob
 import os
+import json
 
-dictionary = {'Előzmények': 'date',
-              'Testsúly (kg)' : 'weight',
-              'Testmozgás (kcal)': 'burnt_calories',
-              'Étel (kcal)': 'calorie_intake',
-              'Zsír (g)' : 'fat',
-              'Telített zsírok (g)' : 'saturated_fat',
-              'Szénhídrátok (g)' : 'carbonhydrate',
-              'Cukrok (g)' : 'sugar',
-              'Fehérje (g)' : 'protein',
-              'Élelmi rost (g)' : 'fiber',
-              'Só (g)' : 'salt'}
+path_db= r'D:\Python_projects\health_analyzer\db'
+with open(os.path.join(path_db, "dictionary.json"), encoding='utf-8') as f:
+    dictionary = json.load(f)
 
 def read_daily_data(path : str) -> pd.DataFrame:
     # TODO lot of distillation is needed for daily data

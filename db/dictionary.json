@@ -1,0 +1,14 @@
+{
+  "Előzmények": "date",
+  "Testsúly (kg)" : "weight",
+  "Testmozgás (kcal)": "burnt_calories",
+  "Étel (kcal)": "calorie_intake",
+  "Zsír (g)" : "fat",
+  "Telített zsírok (g)" : "saturated_fat",
+  "Szénhídrátok (g)" : "carbonhydrate",
+  "Cukrok (g)" : "sugar",
+  "Fehérje (g)" : "protein",
+  "Élelmi rost (g)" : "fiber",
+  "Só (g)" : "salt",
+  "Cél" : "goal"
+}
