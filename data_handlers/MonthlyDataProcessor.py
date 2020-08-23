@@ -33,6 +33,7 @@ class MonthlyDataProcessor(DataPreprocessorInterface):
         df = self._delete_missing_data_rows(df)
         df, goal = self._extract_goal(df)
         df = self._convert_dates(df)
+        df = self._interpolate_missing_values(df, ['weight'])
         month = self._extract_month(df)
 
         return MonthlyData(df, goal, month)
