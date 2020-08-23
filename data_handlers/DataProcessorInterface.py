@@ -39,11 +39,14 @@ class DataPreprocessorInterface(ABC):
 
         for col in df:
             for i, row in enumerate(df[col]):
-                word = df[col][i]
+                data_entry = df[col][i]
 
-                if word in self.dictionary:
-                    print(word)
-                    df[col][i] = self.dictionary[word]
+                if data_entry in self.dictionary:
+                    print(data_entry)
+                    df[col][i] = self.dictionary[data_entry]
+
+                elif type(data_entry) == str and data_entry.replace('.','',1).isdigit():
+                    df[col][i] = float(data_entry)
 
     def _extract_goal(self, df: pd.DataFrame) -> pd.DataFrame:
         goal_df = df.loc[df['date'] == 'goal']
