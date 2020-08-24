@@ -27,6 +27,6 @@ class MonthlyDataProcessor(DataPreprocessorInterface):
         df.index = range(len(df))
         return df
 
-    def _extract_month(self, df : pd.DataFrame):
+    def _extract_month(self, df : pd.DataFrame) -> str:
         arbitrary_date = df.date[0]
-        return arbitrary_date.month
+        return str(arbitrary_date.year - 2000) + str(arbitrary_date.month)

@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import pandas as pd
 import seaborn as sns
+from mlxtend.plotting import scatterplotmatrix
 
 class MonthlyPlotter:
 
@@ -39,5 +40,12 @@ class MonthlyPlotter:
             axs[2][-1].set_xticklabels(dates, rotation=45)
 
             plt.show()
+
+    def plot_feature_relationships(self, entries : list) -> None:
+
+        for df in entries:
+            cols = list(df.data.columns)
+            scatterplotmatrix(df.data.values, names=cols, alpha=0.7)
+            plt.savefig(f'feature_relationships_{df.month}')
 
 
