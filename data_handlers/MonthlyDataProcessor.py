@@ -10,7 +10,7 @@ class MonthlyDataProcessor(DataPreprocessorInterface):
     def __init__(self, db_path : str):
         super(MonthlyDataProcessor, self).__init__(db_path, 'monthly')
 
-    def _clean_entry(self, df : pd.DataFrame) -> Type[DataInterface]:
+    def _clean_entry(self, df : pd.DataFrame):
         self._translate_columns(df)
         df = self._delete_only_nan_columns_and_rows(df)
         df = self._delete_missing_data_rows(df)
@@ -19,7 +19,7 @@ class MonthlyDataProcessor(DataPreprocessorInterface):
         df = self._interpolate_missing_values(df, ['weight'])
         month = self._extract_month(df)
 
-        return MonthlyData(df, goal, month)
+        return MonthlyData(df, goal, month), df
 
     def _delete_missing_data_rows(self, df : pd.DataFrame) -> pd.DataFrame:
 

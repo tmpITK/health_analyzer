@@ -11,7 +11,7 @@ class DailyDataProcessor(DataPreprocessorInterface):
         super(DailyDataProcessor, self).__init__(db_path, 'daily')
 
 
-    def _clean_entry(self, df : pd.DataFrame) -> Type[DataInterface]:
+    def _clean_entry(self, df : pd.DataFrame):
         self._translate_columns(df)
 
-        return df
+        return DailyData(df, None, None), df

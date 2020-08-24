@@ -23,9 +23,10 @@ class DataPreprocessorInterface(ABC):
     def _clean_entry(self, df : pd.DataFrame) -> Type[DataInterface]:
         pass
 
-    def process_database(self) -> list:
+    def process_database(self) -> pd.DataFrame:
 
         data = []
+        dfs = []
         all_files = glob(self.db_path + r'\*.csv')
 
         for file_name in all_files:
@@ -33,12 +34,13 @@ class DataPreprocessorInterface(ABC):
             data.append(df)
 
         for index, raw_entry in enumerate(data):
-            clean_entry = self._clean_entry(raw_entry)
+            clean_entry, df = self._clean_entry(raw_entry)
             data[index] = clean_entry
+            dfs.append(df)
 
         self._save_clean_data(data)
 
-        return data
+        return pd.concat(dfs)
 
 
     def _save_clean_data(self, data : list):
