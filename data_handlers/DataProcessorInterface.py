@@ -78,6 +78,14 @@ class DataPreprocessorInterface(ABC):
 
         return df, goal_df
 
+    def _convert_columns_to_type(self, df : pd.DataFrame, columns_to_convert=[], type_to_convert_to=float) -> pd.DataFrame:
+
+        for col in df:
+            if col in columns_to_convert:
+                df[col] = df[col].astype(type_to_convert_to)
+
+        return df
+
     def _convert_dates(self, df: pd.DataFrame):
         df['date'] = pd.to_datetime(df.date, format='%Y-%m-%d').dt.date
         return df
