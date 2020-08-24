@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import pandas as pd
-import seaborn as sns
-from mlxtend.plotting import scatterplotmatrix
+import numpy as np
+from mlxtend.plotting import scatterplotmatrix, heatmap
 
 class MonthlyPlotter:
 
@@ -41,10 +41,26 @@ class MonthlyPlotter:
 
         plt.show()
 
-    def plot_feature_relationships(self, df : pd.DataFrame) -> None:
+    def plot_feature_relationships(self, df : pd.DataFrame, cols=[], postfix='') -> None:
 
-        cols = list(df.columns)
-        scatterplotmatrix(df.values, names=cols, alpha=0.7)
-        plt.savefig(f'feature_relationships.png')
+        no_date_df = df.drop(columns=['date'])
+
+        if not cols:
+            cols = list(no_date_df.columns)
+
+        scatterplotmatrix(no_date_df.values, names=cols, alpha=0.7)
+        plt.savefig(f'feature_relationships{postfix}.png')
+
+    def plot_correlations(self, df : pd.DataFrame, cols=[], postfix='') -> None:
+
+        no_date_df = df.drop(columns=['date'])
+
+        if not cols:
+            cols = list(no_date_df.columns)
+
+        corr = np.corrcoef(no_date_df[cols].values.T)
+        heat = heatmap(corr, row_names=cols, column_names=cols)
+        plt.show()
+        plt.savefig(f'correlation_matrix{postfix}.png')
 
 

@@ -14,6 +14,7 @@ if __name__ == '__main__':
     #mp.plot_column(clean_data[0], columnToPlot='calorie_intake')
     #mp.plot_full_data(clean_data)
     mp.plot_feature_relationships(clean_data)
+    mp.plot_correlations(clean_data)
 
     #testing
     with open(r'D:\Python_projects\health_analyzer\db\monthly\clean\clean.pickle', 'rb') as f:
