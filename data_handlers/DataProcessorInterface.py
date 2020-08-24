@@ -93,10 +93,9 @@ class DataPreprocessorInterface(ABC):
 
         return df
 
-    def _interpolate_missing_values(self, df: pd.DataFrame, columns : list, method='nearest', type_to_interpolate=float) -> pd.DataFrame:
+    def _interpolate_missing_values(self, df: pd.DataFrame, columns : list, method='linear', type_to_interpolate=float) -> pd.DataFrame:
 
         for col in columns:
-            df[col] = df[col].astype(type_to_interpolate).interpolate(method=method)
-            # last value is not interpolated
-            df.loc[len(df[col]) - 1, col]= df.loc[len(df[col]) - 2, col]
+            df[col] = df[col].astype(type_to_interpolate).interpolate(method=method, limit=10, limit_direction='both')
+
         return df
