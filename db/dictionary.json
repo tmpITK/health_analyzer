@@ -10,5 +10,19 @@
   "Fehérje (g)" : "protein",
   "Élelmi rost (g)" : "fiber",
   "Só (g)" : "salt",
-  "Cél" : "goal"
+  "Cél" : "goal",
+  "Reggeli" : "breakfast",
+  "Ebéd" : "lunch",
+  "Vacsora" : "dinner",
+  "Nassolnivalók" : "other",
+  "csomag" : "package",
+  "adag" : "portion",
+  "Név" : "name",
+  "Eddig" : "so_far",
+  "Testmozgások" : "sport",
+  "Időtartam (perc)" : "duration_min",
+  "Lépések" : "steps",
+  "Elégetett kalória (kcal)" : "burnt_calories",
+  "Kalória" : "kcal",
+  "Testméretek" : "body_data"
 }

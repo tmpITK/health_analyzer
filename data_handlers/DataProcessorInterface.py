@@ -6,6 +6,8 @@ from data_types.DataInterface import DataInterface
 from abc import ABC, abstractmethod
 from utils.io_ops import create_folder
 import pickle
+from glob import glob
+from utils.constants import MAX_NUMBER_OF_ALLOWED_CHARS, UNWANTED_CHARS
 
 class DataPreprocessorInterface(ABC):
 
@@ -18,16 +20,26 @@ class DataPreprocessorInterface(ABC):
 
 
     @abstractmethod
-    def process_database(self) -> list:
-        pass
-
-    @abstractmethod
     def _clean_entry(self, df : pd.DataFrame) -> Type[DataInterface]:
         pass
 
-    @abstractmethod
-    def _extract_month(self, df : pd.DataFrame):
-        pass
+    def process_database(self) -> list:
+
+        data = []
+        all_files = glob(self.db_path + r'\*.csv')
+
+        for file_name in all_files:
+            df = pd.read_csv(file_name)
+            data.append(df)
+
+        for index, raw_entry in enumerate(data):
+            clean_entry = self._clean_entry(raw_entry)
+            data[index] = clean_entry
+
+        self._save_clean_data(data)
+
+        return data
+
 
     def _save_clean_data(self, data : list):
         clean_data_path = os.path.join(self.db_path, 'clean')
@@ -42,11 +54,21 @@ class DataPreprocessorInterface(ABC):
                 data_entry = df[col][i]
 
                 if data_entry in self.dictionary:
-                    print(data_entry)
                     df[col][i] = self.dictionary[data_entry]
 
                 elif type(data_entry) == str and data_entry.replace('.','',1).isdigit():
                     df[col][i] = float(data_entry)
+
+                elif type(data_entry) == str:
+                    df[col][i] = self._format_data_entry(data_entry)
+
+    def _format_data_entry(self, entry : str) -> str:
+        entry = entry[:MAX_NUMBER_OF_ALLOWED_CHARS]
+        #not the best -> in case more then 1 replacements in one place multiple '_' will be used, rather uncommon tho
+        for c in UNWANTED_CHARS:
+            if c in entry:
+                entry = entry.replace(c, '_')
+        return entry
 
     def _extract_goal(self, df: pd.DataFrame) -> pd.DataFrame:
         goal_df = df.loc[df['date'] == 'goal']
