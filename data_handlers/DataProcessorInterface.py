@@ -59,7 +59,7 @@ class DataPreprocessorInterface(ABC):
                 elif type(data_entry) == str and data_entry.replace('.','',1).isdigit():
                     df[col][i] = float(data_entry)
 
-                elif type(data_entry) == str:
+                elif type(data_entry) == str and not data_entry.replace('-','').isdigit():
                     df[col][i] = self._format_data_entry(data_entry)
 
     def _format_data_entry(self, entry : str) -> str:
